@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<!-- =========================================================================
+  RUTA::SOFTWARE — index.html (página principal)
+  -------------------------------------------------------------------------
+  ÍNDICE DE ESTE ARCHIVO (busca estos títulos con Ctrl+F para saltar rápido):
+    1. <head>                 → fuentes, estilos y librerías (PDF/Excel)
+    2. .topbar                → barra superior con iconos y animación de menú
+    3. .hero + .counters      → introducción y contadores (visitas/forms/unis)
+    4. CARRUSEL               → carrusel de ilustraciones (ver <div class="carousel">)
+    5. UNIVERSIDADES          → tarjetas de las 3 universidades (id="universidades")
+    6. FORMULARIO             → formulario + descarga PDF/Excel (id="formulario")
+    7. APPS Y PROGRAMAS       → chips de herramientas (id="herramientas")
+    8. <footer>                → enlaces rápidos + copyright
+  El cuestionario de nivel de aprendizaje vive en nivel.html.
+  Estilos compartidos: style.css · Lógica compartida: script.js
+  ========================================================================= -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUTA::SOFTWARE — Guía de Ingeniería de Software</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<!-- Librerías para exportar el formulario a PDF y Excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="dots"><span></span><span></span><span></span></span>
+    <div class="brand"><span class="accent">ruta</span><span class="path">::</span>software</div>
+    <nav class="nav">
+      <a href="index.html" aria-current="page"><span class="nav-icon">⌂</span>inicio</a>
+      <a href="wiki.html"><span class="nav-icon">§</span>wiki</a>
+      <a href="demo.html"><span class="nav-icon">▶</span>demo &amp; juego</a>
+      <a href="nivel.html"><span class="nav-icon">⚡</span>nivel</a>
+    </nav>
+    <span class="clock" data-clock></span>
+    <button class="theme-toggle" data-theme-toggle>☾ modo oscuro</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= HERO + CONTADORES ================= -->
+  <section class="hero wrap" style="border-bottom:none;">
+    <p class="kicker">$ elegir --carrera=ingenieria-de-software</p>
+    <h1>Una guía práctica para decidirte por Ingeniería de Software</h1>
+    <p>Compara universidades, revisa costos referenciales, arma tu ficha personal y descárgala en PDF o Excel. Todo enfocado únicamente en la carrera de Ingeniería de Software.</p>
+
+    <div class="counters">
+      <div class="counter">
+        <span class="n" data-counter="visitas">0</span>
+        <span class="label">visitas a esta página</span>
+      </div>
+      <div class="counter">
+        <span class="n" data-counter="forms">0</span>
+        <span class="label">formularios descargados (PDF/Excel)</span>
+      </div>
+      <div class="counter">
+        <span class="n" data-counter="unis">0</span>
+        <span class="label">universidades asociadas en la guía</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CARRUSEL ================= -->
+  <section class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">01 — de un vistazo</p>
+      <h2>¿A qué se dedica un ingeniero de software?</h2>
+      <p>Un recorrido rápido por las etapas del trabajo diario antes de comparar universidades.</p>
+    </div>
+
+    <div class="carousel">
+      <div class="carousel-track">
+
+        <div class="carousel-slide">
+          <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustración de una pantalla de código">
+            <rect width="600" height="280" fill="var(--bg-alt)"/>
+            <rect x="60" y="40" width="480" height="200" rx="8" fill="var(--panel)" stroke="var(--line)"/>
+            <rect x="60" y="40" width="480" height="26" rx="8" fill="var(--accent)"/>
+            <circle cx="78" cy="53" r="4" fill="#08130F"/><circle cx="92" cy="53" r="4" fill="#08130F"/><circle cx="106" cy="53" r="4" fill="#08130F"/>
+            <text x="80" y="96" font-family="monospace" font-size="14" fill="var(--ink-soft)">function construir() {</text>
+            <text x="100" y="118" font-family="monospace" font-size="14" fill="var(--accent-ink,#2F7A63)">return diseñar(problema);</text>
+            <text x="80" y="140" font-family="monospace" font-size="14" fill="var(--ink-soft)">}</text>
+            <text x="80" y="170" font-family="monospace" font-size="14" fill="var(--ink-soft)">// probar, revisar, repetir</text>
+            <rect x="80" y="190" width="220" height="10" rx="5" fill="var(--line)"/>
+            <rect x="80" y="190" width="140" height="10" rx="5" fill="var(--accent)"/>
+          </svg>
+          <div class="carousel-caption">
+            <h3>Programar y diseñar soluciones</h3>
+            <p>Se escribe, prueba y mejora código para resolver problemas reales, casi siempre en equipo.</p>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustración de un diagrama de red">
+            <rect width="600" height="280" fill="var(--bg-alt)"/>
+            <g stroke="var(--line)" stroke-width="2">
+              <line x1="150" y1="90" x2="300" y2="150"/>
+              <line x1="450" y1="90" x2="300" y2="150"/>
+              <line x1="300" y1="150" x2="300" y2="220"/>
+              <line x1="150" y1="90" x2="450" y2="90"/>
+            </g>
+            <circle cx="150" cy="90" r="26" fill="var(--panel)" stroke="var(--accent)" stroke-width="3"/>
+            <circle cx="450" cy="90" r="26" fill="var(--panel)" stroke="var(--accent)" stroke-width="3"/>
+            <circle cx="300" cy="150" r="30" fill="var(--accent)"/>
+            <circle cx="300" cy="220" r="22" fill="var(--panel)" stroke="var(--accent-2)" stroke-width="3"/>
+            <text x="300" y="256" text-anchor="middle" font-family="monospace" font-size="13" fill="var(--ink-soft)">servidores · bases de datos · APIs</text>
+          </svg>
+          <div class="carousel-caption">
+            <h3>Diseñar sistemas y arquitectura</h3>
+            <p>Se conectan servidores, bases de datos y servicios para que una aplicación funcione a gran escala.</p>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustración de trabajo en equipo">
+            <rect width="600" height="280" fill="var(--bg-alt)"/>
+            <circle cx="220" cy="130" r="30" fill="var(--panel)" stroke="var(--accent)" stroke-width="3"/>
+            <circle cx="320" cy="110" r="30" fill="var(--panel)" stroke="var(--accent-2)" stroke-width="3"/>
+            <circle cx="380" cy="170" r="30" fill="var(--panel)" stroke="var(--accent)" stroke-width="3"/>
+            <rect x="180" y="190" width="260" height="14" rx="7" fill="var(--line)"/>
+            <rect x="180" y="190" width="170" height="14" rx="7" fill="var(--accent)"/>
+            <text x="300" y="240" text-anchor="middle" font-family="monospace" font-size="13" fill="var(--ink-soft)">sprint · revisión de código · entrega</text>
+          </svg>
+          <div class="carousel-caption">
+            <h3>Trabajar en equipo, por ciclos</h3>
+            <p>El trabajo se organiza en sprints cortos con revisiones de código y entregas frecuentes.</p>
+          </div>
+        </div>
+
+      </div>
+      <button class="carousel-btn prev" aria-label="Anterior">‹</button>
+      <button class="carousel-btn next" aria-label="Siguiente">›</button>
+      <div class="carousel-dots"></div>
+    </div>
+  </section>
+
+  <!-- ================= UNIVERSIDADES ================= -->
+  <section class="wrap" id="universidades">
+    <div class="section-head">
+      <p class="eyebrow">02 — opciones para estudiar</p>
+      <h2>Tres universidades para Ingeniería de Software</h2>
+      <p>Instrucciones básicas de admisión, costo mensual referencial y enlace directo al sitio y ubicación oficial de cada una. <strong>Verifica siempre las cifras en la fuente oficial</strong>, ya que cambian cada año.</p>
+    </div>
+
+    <div class="uni-grid">
+
+      <article class="uni-card">
+        <div class="win-bar"><span class="dots"><span></span><span></span><span></span></span><span class="win-title">UES/ingenieria-de-sistemas</span></div>
+        <div class="body">
+          <h3>Universidad de El Salvador (UES)</h3>
+          <p class="muted">Pública · San Salvador y sedes regionales</p>
+          <div class="cost">Mensualidad ref.: $15–$40 (arancel diferenciado)</div>
+          <ol>
+            <li>Rendir la Prueba de Aptitudes y Aprendizajes (PAES/prueba de admisión).</li>
+            <li>Completar el proceso de nuevo ingreso en línea.</li>
+            <li>Entregar documentos: partida de nacimiento, título de bachiller.</li>
+            <li>Confirmar matrícula en la Facultad de Ingeniería y Arquitectura.</li>
+          </ol>
+          <div class="uni-actions">
+            <a class="btn primary" href="https://www.ues.edu.sv/" target="_blank" rel="noopener">Sitio oficial</a>
+            <a class="btn small" href="https://www.google.com/maps/search/?api=1&query=Universidad+de+El+Salvador" target="_blank" rel="noopener">Ver en Google Maps</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="uni-card">
+        <div class="win-bar"><span class="dots"><span></span><span></span><span></span></span><span class="win-title">UDB/ingenieria-de-software</span></div>
+        <div class="body">
+          <h3>Universidad Don Bosco (UDB)</h3>
+          <p class="muted">Privada · Soyapango, San Salvador</p>
+          <div class="cost">Mensualidad ref.: $150–$260</div>
+          <ol>
+            <li>Solicitar información y llenar formulario de admisión.</li>
+            <li>Rendir prueba de conocimientos y entrevista.</li>
+            <li>Presentar documentos académicos y DUI.</li>
+            <li>Pagar matrícula y elegir horario de inicio.</li>
+          </ol>
+          <div class="uni-actions">
+            <a class="btn primary" href="https://www.udb.edu.sv/" target="_blank" rel="noopener">Sitio oficial</a>
+            <a class="btn small" href="https://www.google.com/maps/search/?api=1&query=Universidad+Don+Bosco+El+Salvador" target="_blank" rel="noopener">Ver en Google Maps</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="uni-card">
+        <div class="win-bar"><span class="dots"><span></span><span></span><span></span></span><span class="win-title">UCA/ingenieria-de-sistemas</span></div>
+        <div class="body">
+          <h3>Universidad Centroamericana "José Simeón Cañas" (UCA)</h3>
+          <p class="muted">Privada · Antiguo Cuscatlán</p>
+          <div class="cost">Mensualidad ref.: $230–$380</div>
+          <ol>
+            <li>Completar el proceso de admisión en línea.</li>
+            <li>Rendir prueba psicométrica y de conocimientos.</li>
+            <li>Entrevista con la facultad correspondiente.</li>
+            <li>Formalizar matrícula y pago inicial.</li>
+          </ol>
+          <div class="uni-actions">
+            <a class="btn primary" href="https://www.uca.edu.sv/" target="_blank" rel="noopener">Sitio oficial</a>
+            <a class="btn small" href="https://www.google.com/maps/search/?api=1&query=Universidad+Centroamericana+Jose+Simeon+Canas" target="_blank" rel="noopener">Ver en Google Maps</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+    <p class="disclaimer">Los montos de mensualidad son referenciales y pueden variar según carga académica, año y sede. Antes de decidir, confirma directamente con cada universidad.</p>
+  </section>
+
+  <!-- ================= FORMULARIO ================= -->
+  <section class="wrap" id="formulario">
+    <div class="section-head">
+      <p class="eyebrow">03 — tu ficha personal</p>
+      <h2>Arma tu ficha de orientación</h2>
+      <p>Completa el formulario y descarga tu ficha en PDF, o un Excel con tu perfil más el comparativo de las tres universidades.</p>
+    </div>
+
+    <div class="form-grid">
+      <form class="card" id="form-perfil" novalidate>
+        <div class="field">
+          <label for="nombre">Nombre completo</label>
+          <input id="nombre" name="nombre" type="text" required placeholder="Ej. María Pérez">
+        </div>
+        <div class="field">
+          <label for="email">Correo electrónico</label>
+          <input id="email" name="email" type="email" required placeholder="tucorreo@ejemplo.com">
+        </div>
+        <div class="field">
+          <label for="universidad">Universidad de interés</label>
+          <select id="universidad" name="universidad">
+            <option>Universidad de El Salvador (UES)</option>
+            <option>Universidad Don Bosco (UDB)</option>
+            <option>Universidad Centroamericana (UCA)</option>
+            <option>Aún no decido</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="modalidad">Modalidad preferida</label>
+          <select id="modalidad" name="modalidad">
+            <option>Presencial</option>
+            <option>Semipresencial</option>
+            <option>Virtual</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="presupuesto">Presupuesto mensual aproximado (USD)</label>
+          <input id="presupuesto" name="presupuesto" type="text" placeholder="Ej. 150">
+        </div>
+        <div class="field">
+          <label for="mensaje">¿Qué te gustaría lograr con esta carrera?</label>
+          <textarea id="mensaje" name="mensaje" rows="3" placeholder="Opcional"></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn primary" id="btn-pdf">⭳ Descargar ficha en PDF</button>
+          <button type="button" class="btn" id="btn-xlsx">⭳ Descargar comparativo en Excel</button>
+        </div>
+        <p class="form-note" id="form-status">Tus datos solo se usan para generar los archivos y no se envían a ningún servidor.</p>
+      </form>
+
+      <aside class="summary-card">
+        <h3>Qué incluye cada descarga</h3>
+        <ul>
+          <li><strong>PDF:</strong> ficha con tus datos, universidad e intereses, lista para imprimir o compartir.</li>
+          <li><strong>Excel:</strong> tu perfil en una hoja y, en otra, el comparativo de mensualidad, duración y modalidad de las tres universidades.</li>
+        </ul>
+        <h3>Herramientas usadas</h3>
+        <p class="muted">Generado en el navegador con jsPDF y SheetJS — no se guarda nada en un servidor.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ================= APPS Y PROGRAMAS ================= -->
+  <section class="wrap" id="herramientas">
+    <div class="section-head">
+      <p class="eyebrow">04 — caja de herramientas</p>
+      <h2>Programas que vas a usar como estudiante</h2>
+      <p>Un adelanto de las apps más comunes en las clases de Ingeniería de Software.</p>
+    </div>
+    <div class="app-grid">
+      <div class="app-chip"><span class="icon">&lt;/&gt;</span>Visual Studio Code</div>
+      <div class="app-chip"><span class="icon">⎇</span>Git &amp; GitHub</div>
+      <div class="app-chip"><span class="icon">▣</span>Docker</div>
+      <div class="app-chip"><span class="icon">↯</span>Postman</div>
+      <div class="app-chip"><span class="icon">☰</span>IntelliJ IDEA</div>
+      <div class="app-chip"><span class="icon">◐</span>Figma</div>
+      <div class="app-chip"><span class="icon">▤</span>Notion</div>
+      <div class="app-chip"><span class="icon">✦</span>Slack</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER: ENLACES RÁPIDOS + COPYRIGHT ================= -->
+<footer class="wrap site-footer">
+  <div class="quicklinks">
+    <div class="quicklinks-title">Enlaces rápidos</div>
+    <nav class="quicklinks-nav">
+      <a href="index.html">Inicio</a>
+      <a href="wiki.html">Wiki</a>
+      <a href="demo.html">Demo &amp; juego</a>
+      <a href="nivel.html">Conoce tu nivel</a>
+      <a href="index.html#universidades">Universidades</a>
+      <a href="index.html#formulario">Formulario</a>
+    </nav>
+  </div>
+  <p class="copyright">© <span data-year></span> ruta::software — guía informativa sin fines oficiales. Consulta siempre a cada universidad antes de decidir.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

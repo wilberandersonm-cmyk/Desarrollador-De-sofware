@@ -1,0 +1,516 @@
+/* =========================================================================
+   RUTA::SOFTWARE — Guía de carrera de Ingeniería de Software
+   Hoja de estilos compartida por index.html, wiki.html y demo.html.
+   -------------------------------------------------------------------------
+   ÍNDICE DE ESTE ARCHIVO (busca el título con Ctrl+F para saltar):
+     :root / [data-theme="dark"]  → paleta de colores y tipografías
+     .topbar / .nav / .clock      → barra superior y menú
+     .hero / .counters            → introducción y contadores
+     .carousel                    → carrusel de imágenes
+     .uni-card / .uni-grid        → tarjetas de universidades
+     .form-grid / form.card       → formulario y resumen de descargas
+     .app-grid / .app-chip        → chips de apps y programas
+     .progress-wrap / .progress-bar → barra de carga (sonidos y nivel)
+     .site-footer / .quicklinks   → enlaces rápidos y copyright (todas las páginas)
+     .wiki-layout / .infobox      → estilos exclusivos de wiki.html
+     .wiki-section / .wiki-media  → secciones con imagen + vista decorada (.wiki-decorated)
+     .level-hero / .level-card    → estilos exclusivos de nivel.html
+     .game-panel / .pad-grid      → estilos exclusivos de demo.html (juego)
+   Paleta y tipografía inspiradas en un editor de código.
+   ========================================================================= */
+
+:root{
+  /* --- Paleta modo claro (papel de plano/blueprint) --- */
+  --bg:            #EFEEE6;
+  --bg-alt:        #E4E2D6;
+  --panel:         #FFFFFF;
+  --ink:           #1B1F27;
+  --ink-soft:      #565F6E;
+  --line:          #D8D5C6;
+  --accent:        #2F7A63;   /* verde terminal */
+  --accent-ink:    #0E3B2C;
+  --accent-2:      #C9A227;   /* ámbar de aviso/resaltado */
+  --danger:        #B3492B;
+  --radius-win:    10px;
+  --shadow:        0 1px 0 rgba(27,31,39,.06);
+  --font-mono: 'JetBrains Mono', 'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-sans: 'IBM Plex Sans', 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
+}
+
+[data-theme="dark"]{
+  --bg:            #10141C;
+  --bg-alt:        #161C27;
+  --panel:         #1A2130;
+  --ink:           #E7E9EE;
+  --ink-soft:      #9AA4B2;
+  --line:          #2B3446;
+  --accent:        #4FD8A6;
+  --accent-ink:    #C9FBE6;
+  --accent-2:      #E3C05B;
+  --danger:        #F0876A;
+  --shadow:        0 1px 0 rgba(0,0,0,.4);
+}
+
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+
+body{
+  margin:0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  transition: background .25s ease, color .25s ease;
+}
+
+img{ max-width:100%; display:block; }
+a{ color: var(--accent-ink); }
+a.plain{ color:inherit; text-decoration:none; }
+
+.wrap{ max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Barra superior tipo "ventana de terminal" ---------- */
+.topbar{
+  position: sticky; top:0; z-index: 40;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner{
+  display:flex; align-items:center; gap:18px;
+  padding: 12px 24px;
+  max-width: 1080px; margin:0 auto;
+}
+.dots{ display:flex; gap:6px; }
+.dots span{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+.dots span:nth-child(1){ background:#E4685D; }
+.dots span:nth-child(2){ background:#E8B23D; }
+.dots span:nth-child(3){ background:#5CB85C; }
+
+.brand{
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: .01em;
+}
+.brand .path{ color: var(--ink-soft); font-weight:400; }
+.brand .accent{ color: var(--accent); }
+
+.nav{ display:flex; gap:2px; margin-left:auto; flex-wrap:wrap; }
+.nav a{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  color: var(--ink-soft);
+  text-decoration:none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: color .2s ease, background-color .2s ease, transform .2s ease;
+}
+.nav a .nav-icon{
+  font-size: .95em;
+  transition: transform .25s ease;
+}
+/* Subrayado animado: crece desde el centro al pasar el mouse o en la página activa */
+.nav a::after{
+  content:'';
+  position:absolute;
+  left:10px; right:10px; bottom:2px;
+  height:2px;
+  background: var(--accent);
+  border-radius:2px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform .25s ease;
+}
+.nav a:hover{ color: var(--ink); background: var(--bg-alt); transform: translateY(-1px); }
+.nav a:hover .nav-icon{ transform: translateY(-1px) scale(1.1); }
+.nav a:hover::after, .nav a[aria-current="page"]::after{ transform: scaleX(1); }
+.nav a[aria-current="page"]{ color: var(--ink); background: var(--bg-alt); }
+
+.clock{
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  color: var(--ink-soft);
+  border-left: 1px solid var(--line);
+  padding-left: 14px;
+  white-space: nowrap;
+}
+
+.theme-toggle{
+  border:1px solid var(--line);
+  background: var(--bg-alt);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor:pointer;
+}
+.theme-toggle:hover{ border-color: var(--accent); }
+
+/* ---------- Héroe ---------- */
+.hero{
+  padding: 56px 0 40px;
+  border-bottom: 1px solid var(--line);
+}
+.hero .kicker{
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: .85rem;
+}
+.hero h1{
+  font-family: var(--font-mono);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height:1.15;
+  margin: .4em 0 .3em;
+  max-width: 16ch;
+}
+.hero p{ max-width: 60ch; color: var(--ink-soft); font-size: 1.05rem; }
+
+/* ---------- Contadores ---------- */
+.counters{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:1px;
+  background: var(--line);
+  border:1px solid var(--line);
+  border-radius: var(--radius-win);
+  overflow:hidden;
+  margin-top: 28px;
+}
+.counter{
+  background: var(--panel);
+  padding: 16px 18px;
+}
+.counter .n{
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  color: var(--accent);
+  display:block;
+}
+.counter .label{ font-size: .82rem; color: var(--ink-soft); }
+
+/* ---------- Secciones genéricas ---------- */
+section{ padding: 48px 0; border-bottom: 1px solid var(--line); }
+.section-head{ margin-bottom: 26px; }
+.section-head .eyebrow{
+  font-family: var(--font-mono); font-size: .78rem; color: var(--accent-2);
+}
+.section-head h2{
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  margin: .25em 0 .2em;
+}
+.section-head p{ color: var(--ink-soft); max-width: 62ch; }
+
+/* ---------- Carrusel ---------- */
+.carousel{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius: var(--radius-win);
+  overflow:hidden;
+  background: var(--panel);
+}
+.carousel-track{
+  display:flex;
+  transition: transform .45s ease;
+}
+.carousel-slide{
+  min-width:100%;
+  display:flex; flex-direction:column;
+}
+.carousel-slide svg{ width:100%; height: 280px; display:block; background: var(--bg-alt); }
+.carousel-caption{ padding: 14px 18px; }
+.carousel-caption h3{ font-family: var(--font-mono); margin:0 0 4px; font-size:1.05rem; }
+.carousel-caption p{ margin:0; color: var(--ink-soft); font-size:.92rem; }
+.carousel-btn{
+  position:absolute; top:50%; transform: translateY(-50%);
+  background: var(--panel); border:1px solid var(--line);
+  width:36px; height:36px; border-radius:50%;
+  font-family: var(--font-mono); cursor:pointer; font-size:1rem;
+  display:flex; align-items:center; justify-content:center;
+}
+.carousel-btn.prev{ left:12px; }
+.carousel-btn.next{ right:12px; }
+.carousel-dots{ display:flex; gap:6px; justify-content:center; padding: 10px 0 14px; }
+.carousel-dots button{
+  width:8px; height:8px; border-radius:50%; border:none; background: var(--line); cursor:pointer;
+}
+.carousel-dots button.active{ background: var(--accent); }
+
+/* ---------- Tarjetas de universidad tipo "ventana de código" ---------- */
+.uni-grid{ display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); }
+.uni-card{
+  border:1px solid var(--line);
+  border-radius: var(--radius-win);
+  background: var(--panel);
+  overflow:hidden;
+  display:flex; flex-direction:column;
+}
+.uni-card .win-bar{
+  display:flex; align-items:center; gap:10px;
+  padding:10px 14px; border-bottom:1px solid var(--line);
+  background: var(--bg-alt);
+}
+.uni-card .win-title{ font-family: var(--font-mono); font-size:.82rem; color: var(--ink-soft); }
+.uni-card .body{ padding: 16px 18px 20px; display:flex; flex-direction:column; gap:10px; flex:1; }
+.uni-card h3{ margin:0; font-family: var(--font-mono); font-size:1.15rem; }
+.uni-card .muted{ color: var(--ink-soft); font-size:.9rem; }
+.uni-card .cost{
+  font-family: var(--font-mono);
+  font-size: .95rem;
+  background: var(--bg-alt);
+  border:1px dashed var(--line);
+  padding:8px 10px;
+  border-radius:6px;
+}
+.uni-card ol{ margin:0; padding-left: 1.1em; font-size:.92rem; color: var(--ink-soft); }
+.uni-card ol li + li{ margin-top:4px; }
+.uni-actions{ margin-top:auto; display:flex; gap:8px; flex-wrap:wrap; }
+
+.btn{
+  font-family: var(--font-mono);
+  font-size: .82rem;
+  border-radius:6px;
+  padding: 9px 12px;
+  border:1px solid var(--line);
+  background: var(--bg-alt);
+  color: var(--ink);
+  text-decoration:none;
+  cursor:pointer;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.btn:hover{ border-color: var(--accent); }
+.btn.primary{ background: var(--accent); border-color: var(--accent); color:#08130F; font-weight:600; }
+.btn.primary:hover{ filter:brightness(1.05); }
+.btn.small{ padding:6px 9px; font-size:.75rem; }
+
+.disclaimer{
+  font-size:.8rem; color: var(--ink-soft); border-left:3px solid var(--accent-2);
+  padding: 8px 12px; background: var(--bg-alt); border-radius: 0 6px 6px 0; margin-top: 18px;
+}
+
+/* ---------- Formulario ---------- */
+.form-grid{ display:grid; gap:22px; grid-template-columns: 1.1fr .9fr; align-items:start; }
+form.card{
+  border:1px solid var(--line); border-radius: var(--radius-win);
+  background: var(--panel); padding: 22px;
+  display:flex; flex-direction:column; gap:14px;
+}
+.field{ display:flex; flex-direction:column; gap:6px; }
+.field label{ font-family: var(--font-mono); font-size:.82rem; color: var(--ink-soft); }
+.field input, .field select, .field textarea{
+  font-family: var(--font-sans);
+  font-size: .95rem;
+  padding: 10px 12px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background: var(--bg);
+  color: var(--ink);
+}
+.field input:focus, .field select:focus, .field textarea:focus{
+  outline: 2px solid var(--accent); outline-offset:1px;
+}
+.form-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; }
+.form-note{ font-size:.85rem; color: var(--ink-soft); }
+
+.summary-card{
+  border:1px solid var(--line); border-radius: var(--radius-win);
+  background: var(--bg-alt); padding: 20px;
+}
+.summary-card h3{ font-family: var(--font-mono); margin-top:0; font-size:1rem; }
+.summary-card ul{ padding-left: 1.1em; font-size:.9rem; color: var(--ink-soft); }
+
+/* ---------- Apps/programas ---------- */
+.app-grid{ display:grid; gap:14px; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); }
+.app-chip{
+  border:1px solid var(--line); border-radius:8px; padding: 14px;
+  background: var(--panel); text-align:center; font-size:.88rem;
+}
+.app-chip .icon{ font-family: var(--font-mono); font-size:1.3rem; color: var(--accent); display:block; margin-bottom:6px; }
+
+/* ---------- Barra de progreso ---------- */
+.progress-wrap{
+  border:1px solid var(--line); border-radius:8px; overflow:hidden; background: var(--bg-alt); height:14px;
+}
+.progress-bar{
+  height:100%; width:0%; background: var(--accent); transition: width .2s linear;
+}
+.progress-label{ font-family: var(--font-mono); font-size:.78rem; color: var(--ink-soft); margin-top:6px; }
+
+/* ---------- Wiki (infobox estilo enciclopedia) ---------- */
+.wiki-layout{ display:grid; grid-template-columns: 1fr 300px; gap:32px; align-items:start; }
+.wiki-body h2{ font-family: var(--font-mono); font-size:1.3rem; border-bottom:1px solid var(--line); padding-bottom:6px; }
+.wiki-body p{ margin: .6em 0; }
+.toc{
+  border:1px solid var(--line); border-radius:8px; padding:14px 16px; background: var(--panel);
+  font-size:.9rem; margin-bottom: 22px;
+}
+.toc-title{ font-family: var(--font-mono); font-weight:700; margin-bottom:8px; }
+.toc ol{ padding-left: 1.2em; }
+.infobox{
+  border:1px solid var(--line); border-radius: var(--radius-win); overflow:hidden; background: var(--panel);
+}
+.infobox .win-bar{ padding:10px 14px; background: var(--bg-alt); border-bottom:1px solid var(--line); font-family: var(--font-mono); font-size:.8rem; }
+.infobox table{ width:100%; border-collapse: collapse; font-size:.85rem; }
+.infobox td{ padding: 8px 12px; border-top:1px solid var(--line); vertical-align:top; }
+.infobox td.k{ color: var(--ink-soft); width: 40%; }
+
+/* ---------- Juego de demo ---------- */
+.game-panel{
+  border:1px solid var(--line); border-radius: var(--radius-win); background: var(--panel); padding: 22px;
+}
+.pad-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:10px; max-width: 340px; margin: 18px 0; }
+.pad{
+  aspect-ratio: 1; border-radius:8px; border:1px solid var(--line);
+  background: var(--bg-alt); cursor:pointer; font-family: var(--font-mono); font-size: 1.1rem;
+  color: var(--ink);
+}
+.pad.lit{ background: var(--accent); color:#040a08; }
+.game-status{ font-family: var(--font-mono); font-size:.9rem; color: var(--ink-soft); }
+
+/* ---------- Pie ---------- */
+footer{ padding: 30px 0 50px; }
+footer p{ color: var(--ink-soft); font-size:.85rem; font-family: var(--font-mono); }
+
+@media (max-width: 800px){
+  .form-grid, .wiki-layout{ grid-template-columns: 1fr; }
+  .counters{ grid-template-columns: 1fr; }
+  .nav{ display:none; }
+}
+
+.visually-hidden{
+  position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;
+}
+
+:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* =========================================================================
+   ENLACES RÁPIDOS + COPYRIGHT (pie de página de todas las páginas)
+   ========================================================================= */
+.site-footer{ padding-top: 30px; }
+.quicklinks{
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+  margin-bottom: 14px;
+}
+.quicklinks-title{
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  color: var(--accent-2);
+  margin-bottom: 10px;
+}
+.quicklinks-nav{ display:flex; flex-wrap:wrap; gap: 6px 18px; }
+.quicklinks-nav a{
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  color: var(--ink-soft);
+  text-decoration:none;
+  position:relative;
+  padding-bottom:2px;
+}
+.quicklinks-nav a::after{
+  content:''; position:absolute; left:0; right:0; bottom:0; height:1px;
+  background: var(--accent); transform: scaleX(0); transform-origin:left;
+  transition: transform .2s ease;
+}
+.quicklinks-nav a:hover{ color: var(--ink); }
+.quicklinks-nav a:hover::after{ transform: scaleX(1); }
+.copyright{ font-size: .78rem; color: var(--ink-soft); font-family: var(--font-mono); margin:0; }
+
+/* =========================================================================
+   WIKI — secciones con imagen (vista clásica y vista decorada)
+   ========================================================================= */
+.wiki-section{
+  display:flex;
+  gap: 18px;
+  align-items:flex-start;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.wiki-section:first-of-type{ padding-top: 6px; }
+.wiki-media{
+  flex: 0 0 150px;
+  border-radius: 8px;
+  overflow:hidden;
+  border: 1px solid var(--line);
+}
+.wiki-media svg{ display:block; width:100%; height:auto; }
+.wiki-text{ flex:1; min-width:0; }
+.wiki-text h2{
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  margin: 0 0 8px;
+  border-bottom:none;
+  padding-bottom:0;
+}
+.wiki-text p{ margin: .5em 0; }
+
+/* Vista decorada: tarjetas más grandes, imagen arriba, borde de color */
+body.wiki-decorated .wiki-section{
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--accent);
+  border-radius: var(--radius-win);
+  background: var(--panel);
+  padding: 0 0 20px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow);
+}
+body.wiki-decorated .wiki-section:nth-child(even){ border-left-color: var(--accent-2); }
+body.wiki-decorated .wiki-media{
+  flex-basis: auto;
+  border-radius: var(--radius-win) var(--radius-win) 0 0;
+  border: none;
+  border-bottom: 1px solid var(--line);
+}
+body.wiki-decorated .wiki-media svg{ height: 170px; object-fit: cover; }
+body.wiki-decorated .wiki-text{ padding: 16px 20px 0; }
+body.wiki-decorated .wiki-text h2{ font-size: 1.35rem; }
+body.wiki-decorated .infobox{ order:-1; margin-bottom: 22px; }
+
+@media (max-width: 640px){
+  .wiki-section{ flex-direction:column; }
+  .wiki-media{ flex-basis:auto; }
+  .wiki-media svg{ height:150px; }
+}
+
+/* =========================================================================
+   NIVEL DE APRENDIZAJE (nivel.html)
+   ========================================================================= */
+.level-hero{
+  display:flex; align-items:center; gap:32px; flex-wrap:wrap;
+  padding: 48px 24px; border-bottom:1px solid var(--line);
+}
+.level-hero-text{ flex: 1 1 320px; }
+.level-hero-text h1{
+  font-family: var(--font-mono); font-size: clamp(1.6rem,3.6vw,2.3rem);
+  margin:.3em 0 .4em; max-width: 18ch;
+}
+.level-hero-text p{ color: var(--ink-soft); max-width: 55ch; }
+.level-hero-media{ flex: 0 0 220px; max-width: 100%; }
+
+.level-card{
+  border:1px solid var(--line); border-radius: var(--radius-win);
+  background: var(--panel); padding: 26px; max-width: 720px; margin: 34px auto;
+  box-shadow: var(--shadow);
+}
+.level-question{
+  border:none; border-bottom:1px solid var(--line);
+  padding: 0 0 16px; margin: 0 0 16px;
+  display:flex; flex-direction:column; gap:8px;
+}
+.level-question legend{
+  font-family: var(--font-mono); font-size: .95rem; padding:0; margin-bottom:4px;
+}
+.level-question label{
+  display:flex; align-items:center; gap:8px;
+  font-size: .92rem; color: var(--ink-soft);
+  padding: 6px 8px; border-radius:6px; cursor:pointer;
+}
+.level-question label:hover{ background: var(--bg-alt); color: var(--ink); }
+.level-result{ margin-top: 22px; }

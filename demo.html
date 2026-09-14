@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!-- =========================================================================
+  RUTA::SOFTWARE — demo.html (banco de pruebas: sonidos + juego)
+  -------------------------------------------------------------------------
+  ÍNDICE DE ESTE ARCHIVO:
+    1. .topbar               → misma barra superior que index.html y wiki.html
+    2. BARRA DE PROGRESO     → carga real de los 4 archivos .wav (id="sound-progress")
+    3. JUEGO DE MEMORIA      → tablero tipo "Simón" (id="pad-grid")
+    4. <script> al final:
+         4.1 SOUND_ASSETS      → lista de los 4 sonidos y su ruta
+         4.2 simulateSoundLoading → precarga real de los .wav + barra
+         4.3 playTone            → reproduce el sonido de una casilla
+         4.4 Juego tipo "Simón"  → secuencia, turnos, ronda y mejor puntaje
+  IMPORTANTE: nota-0.wav, nota-1.wav, nota-2.wav y nota-3.wav deben estar
+  en la MISMA carpeta que este archivo.
+  Estilos: style.css · Lógica compartida (reloj, modo oscuro): script.js
+  ========================================================================= -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo interactiva — RUTA::SOFTWARE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="dots"><span></span><span></span><span></span></span>
+    <div class="brand"><span class="accent">ruta</span><span class="path">::</span>software</div>
+    <nav class="nav">
+      <a href="index.html"><span class="nav-icon">⌂</span>inicio</a>
+      <a href="wiki.html"><span class="nav-icon">§</span>wiki</a>
+      <a href="demo.html" aria-current="page"><span class="nav-icon">▶</span>demo &amp; juego</a>
+      <a href="nivel.html"><span class="nav-icon">⚡</span>nivel</a>
+    </nav>
+    <span class="clock" data-clock></span>
+    <button class="theme-toggle" data-theme-toggle>☾ modo oscuro</button>
+  </div>
+</header>
+
+<main class="wrap" style="padding-top:36px;">
+  <p class="kicker">demostración</p>
+  <h1 style="font-family:var(--font-mono); font-size:clamp(1.6rem,4vw,2.2rem); margin:.3em 0 .6em;">Probando las funciones del sitio</h1>
+  <p style="max-width:65ch; color:var(--ink-soft);">Esta página sirve como banco de pruebas: primero se cargan los sonidos con una barra de progreso documentada en el código, y luego puedes jugar una secuencia de memoria estilo Simón usando esos sonidos.</p>
+
+  <!-- ================= BARRA DE PROGRESO DE CARGA DE SONIDOS ================= -->
+  <section style="border-bottom:1px solid var(--line); padding:30px 0;">
+    <div class="game-panel">
+      <h2 style="font-family:var(--font-mono); font-size:1.1rem; margin-top:0;">Carga de sonidos</h2>
+      <div class="progress-wrap">
+        <div class="progress-bar" id="sound-progress"></div>
+      </div>
+      <p class="progress-label" id="sound-progress-label">0% — preparando…</p>
+      <p class="form-note">
+        Esta barra refleja la precarga real de los 4 archivos <code>.wav</code> que están junto a <code>demo.html</code>.
+        El código está comentado paso a paso más abajo por si quieres cambiarlos por otros sonidos tuyos.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= JUEGO DE MEMORIA CON SONIDOS ================= -->
+  <section style="padding:30px 0;">
+    <div class="game-panel">
+      <h2 style="font-family:var(--font-mono); font-size:1.1rem; margin-top:0;">Juego de memoria sonora</h2>
+      <p class="muted" style="color:var(--ink-soft);">Repite la secuencia de colores/sonidos que se te muestra. Cada color reproduce una nota distinta.</p>
+
+      <div class="pad-grid" id="pad-grid">
+        <button class="pad" data-note="0" aria-label="Casilla 1"></button>
+        <button class="pad" data-note="1" aria-label="Casilla 2"></button>
+        <button class="pad" data-note="2" aria-label="Casilla 3"></button>
+        <button class="pad" data-note="3" aria-label="Casilla 4"></button>
+      </div>
+
+      <p class="game-status" id="game-status">Presiona "Iniciar" para comenzar.</p>
+      <div class="form-actions">
+        <button class="btn primary" id="btn-start-game" disabled>Iniciar juego</button>
+        <span class="form-note">Ronda: <strong id="game-round">0</strong> · Mejor puntaje: <strong id="game-best">0</strong></span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= FOOTER: ENLACES RÁPIDOS + COPYRIGHT ================= -->
+<footer class="wrap site-footer">
+  <div class="quicklinks">
+    <div class="quicklinks-title">Enlaces rápidos</div>
+    <nav class="quicklinks-nav">
+      <a href="index.html">Inicio</a>
+      <a href="wiki.html">Wiki</a>
+      <a href="demo.html">Demo &amp; juego</a>
+      <a href="nivel.html">Conoce tu nivel</a>
+      <a href="index.html#universidades">Universidades</a>
+      <a href="index.html#formulario">Formulario</a>
+    </nav>
+  </div>
+  <p class="copyright">© <span data-year></span> ruta::software — página de pruebas de funciones interactivas.</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+/* =========================================================================
+   DEMO DE SONIDOS — usa 4 archivos .wav reales que están en la MISMA
+   carpeta que este demo.html (nota-0.wav, nota-1.wav, nota-2.wav, nota-3.wav).
+
+   Si algún día mueves los archivos a una subcarpeta (por ejemplo "sonidos/"),
+   solo cambia el valor de "src" de cada objeto en SOUND_ASSETS, por ejemplo:
+     src: 'sonidos/nota-0.wav'
+   ========================================================================= */
+
+// Lista de recursos de sonido reales que se precargan antes del juego.
+// OJO: cada "id" es distinto (nota-0, nota-1, nota-2, nota-3) — antes había
+// un error donde "nota-1" estaba repetido y por eso sonaba raro.
+const SOUND_ASSETS = [
+  { id: 'nota-0', src: 'nota-0.wav' },
+  { id: 'nota-1', src: 'nota-1.wav' },
+  { id: 'nota-2', src: 'nota-2.wav' },
+  { id: 'nota-3', src: 'nota-3.wav' },
+];
+
+// Objetos <audio> ya cargados, listos para reproducirse en el juego.
+const loadedAudios = [];
+
+const progressBar = document.getElementById('sound-progress');
+const progressLabel = document.getElementById('sound-progress-label');
+const startBtn = document.getElementById('btn-start-game');
+
+// Carga real: crea un <audio> por cada recurso y espera el evento
+// 'canplaythrough' (audio listo para reproducirse sin cortes) antes de
+// avanzar la barra de progreso.
+function simulateSoundLoading(){
+  let loaded = 0;
+  const total = SOUND_ASSETS.length;
+
+  function onOneLoaded(audio, item){
+    loadedAudios[SOUND_ASSETS.indexOf(item)] = audio;
+    loaded += 1;
+    const pct = Math.round((loaded / total) * 100);
+    progressBar.style.width = pct + '%';
+    progressLabel.textContent = pct + '% — ' + (pct < 100 ? 'cargando ' + item.id : 'listo');
+    if(loaded === total){
+      startBtn.disabled = false;
+      document.getElementById('game-status').textContent = 'Sonidos listos. Presiona "Iniciar" para comenzar.';
+    }
+  }
+
+  SOUND_ASSETS.forEach((item) => {
+    const audio = new Audio(item.src);
+    audio.addEventListener('canplaythrough', () => onOneLoaded(audio, item), { once: true });
+    audio.addEventListener('error', () => onOneLoaded(audio, item), { once: true }); // no bloquear si un archivo falla
+    audio.load();
+  });
+}
+simulateSoundLoading();
+
+/* ---------------------- Reproducción de las notas ---------------------- */
+// Usa los archivos reales precargados en vez de generar un tono.
+function playTone(noteIndex){
+  const base = loadedAudios[noteIndex];
+  if(!base) return;
+  const audio = base.cloneNode(); // clon para permitir toques rápidos y repetidos
+  audio.play();
+}
+
+/* ---------------------- Juego tipo "Simón" ---------------------- */
+const pads = Array.from(document.querySelectorAll('.pad'));
+const roundEl = document.getElementById('game-round');
+const bestEl = document.getElementById('game-best');
+const statusEl = document.getElementById('game-status');
+
+let sequence = [];
+let playerStep = 0;
+let accepting = false;
+let best = parseInt(localStorage.getItem('rs-game-best') || '0', 10);
+bestEl.textContent = best;
+
+function lightPad(i, duration = 350){
+  const pad = pads[i];
+  pad.classList.add('lit');
+  playTone(i);
+  setTimeout(() => pad.classList.remove('lit'), duration);
+}
+
+async function playSequence(){
+  accepting = false;
+  statusEl.textContent = 'Observa la secuencia…';
+  for(let i = 0; i < sequence.length; i++){
+    await new Promise(res => setTimeout(res, 500));
+    lightPad(sequence[i]);
+  }
+  await new Promise(res => setTimeout(res, 300));
+  accepting = true;
+  playerStep = 0;
+  statusEl.textContent = 'Tu turno: repite la secuencia.';
+}
+
+function nextRound(){
+  sequence.push(Math.floor(Math.random() * 4));
+  roundEl.textContent = sequence.length;
+  playSequence();
+}
+
+pads.forEach((pad, i) => {
+  pad.addEventListener('click', () => {
+    if(!accepting) return;
+    lightPad(i, 200);
+    if(sequence[playerStep] === i){
+      playerStep++;
+      if(playerStep === sequence.length){
+        accepting = false;
+        setTimeout(nextRound, 700);
+      }
+    } else {
+      accepting = false;
+      statusEl.textContent = `Fallaste en la ronda ${sequence.length}. Presiona "Iniciar" para volver a intentar.`;
+      if(sequence.length - 1 > best){
+        best = sequence.length - 1;
+        bestEl.textContent = best;
+        localStorage.setItem('rs-game-best', String(best));
+      }
+      sequence = [];
+      roundEl.textContent = 0;
+      startBtn.disabled = false;
+    }
+  });
+});
+
+startBtn.addEventListener('click', () => {
+  startBtn.disabled = true;
+  sequence = [];
+  nextRound();
+});
+</script>
+</body>
+</html>

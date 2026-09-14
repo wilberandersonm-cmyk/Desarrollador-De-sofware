@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!-- =========================================================================
+  RUTA::SOFTWARE — nivel.html (mini cuestionario de nivel de aprendizaje)
+  -------------------------------------------------------------------------
+  ÍNDICE DE ESTE ARCHIVO:
+    1. .topbar        → misma barra superior que el resto del sitio
+    2. .level-hero     → encabezado decorado con ilustración grande
+    3. #quiz-form      → las 5 preguntas (fieldsets con data-correct)
+    4. #quiz-result     → barra de nivel + etiqueta de resultado
+    5. <footer>          → enlaces rápidos + copyright
+  La lógica de calificación vive en script.js, función initLevelQuiz()
+  (se activa sola porque busca #quiz-form en la página).
+  Estilos: style.css (busca ".level-hero" y ".level-card")
+  ========================================================================= -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conoce tu nivel — RUTA::SOFTWARE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="dots"><span></span><span></span><span></span></span>
+    <div class="brand"><span class="accent">ruta</span><span class="path">::</span>software</div>
+    <nav class="nav">
+      <a href="index.html"><span class="nav-icon">⌂</span>inicio</a>
+      <a href="wiki.html"><span class="nav-icon">§</span>wiki</a>
+      <a href="demo.html"><span class="nav-icon">▶</span>demo &amp; juego</a>
+      <a href="nivel.html" aria-current="page"><span class="nav-icon">⚡</span>nivel</a>
+    </nav>
+    <span class="clock" data-clock></span>
+    <button class="theme-toggle" data-theme-toggle>☾ modo oscuro</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= ENCABEZADO DECORADO ================= -->
+  <section class="level-hero wrap">
+    <div class="level-hero-text">
+      <p class="kicker">⚡ mini diagnóstico</p>
+      <h1>Conoce tu nivel de aprendizaje</h1>
+      <p>Responde estas 5 preguntas básicas de programación. No es un examen: es solo una referencia amistosa para saber desde dónde vas a empezar en la carrera.</p>
+    </div>
+    <div class="level-hero-media">
+      <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustración de un medidor de nivel">
+        <defs>
+          <linearGradient id="levelGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="var(--accent-2)"/>
+            <stop offset="100%" stop-color="var(--accent)"/>
+          </linearGradient>
+        </defs>
+        <circle cx="130" cy="110" r="80" fill="none" stroke="var(--line)" stroke-width="14"/>
+        <path d="M 50 110 A 80 80 0 0 1 210 110" fill="none" stroke="url(#levelGrad)" stroke-width="14" stroke-linecap="round"/>
+        <circle cx="130" cy="110" r="10" fill="var(--ink)"/>
+        <line x1="130" y1="110" x2="175" y2="70" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/>
+        <text x="130" y="45" text-anchor="middle" font-family="monospace" font-size="14" fill="var(--ink-soft)">nivel</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ================= FORMULARIO DEL QUIZ ================= -->
+  <section class="wrap">
+    <div class="level-card">
+      <form id="quiz-form">
+        <!-- Cada pregunta es un <fieldset> con 4 opciones tipo radio. -->
+        <!-- data-correct indica el índice (0-3) de la respuesta correcta. -->
+        <fieldset class="level-question" data-correct="0">
+          <legend>1. ¿Qué significa "IDE"?</legend>
+          <label><input type="radio" name="q1" value="0"> Entorno de desarrollo integrado</label>
+          <label><input type="radio" name="q1" value="1"> Intercambio de datos de internet</label>
+          <label><input type="radio" name="q1" value="2"> Motor interno de diseño</label>
+          <label><input type="radio" name="q1" value="3"> Entrada instantánea de datos</label>
+        </fieldset>
+
+        <fieldset class="level-question" data-correct="0">
+          <legend>2. ¿Cuál de estas es una estructura de control?</legend>
+          <label><input type="radio" name="q2" value="0"> if / else</label>
+          <label><input type="radio" name="q2" value="1"> CSS</label>
+          <label><input type="radio" name="q2" value="2"> FTP</label>
+          <label><input type="radio" name="q2" value="3"> HTML</label>
+        </fieldset>
+
+        <fieldset class="level-question" data-correct="0">
+          <legend>3. ¿Para qué sirve Git?</legend>
+          <label><input type="radio" name="q3" value="0"> Control de versiones del código</label>
+          <label><input type="radio" name="q3" value="1"> Diseño gráfico</label>
+          <label><input type="radio" name="q3" value="2"> Hospedaje de páginas web</label>
+          <label><input type="radio" name="q3" value="3"> Antivirus</label>
+        </fieldset>
+
+        <fieldset class="level-question" data-correct="0">
+          <legend>4. ¿Qué es una "función" en programación?</legend>
+          <label><input type="radio" name="q4" value="0"> Un bloque de código reutilizable</label>
+          <label><input type="radio" name="q4" value="1"> Un tipo de error</label>
+          <label><input type="radio" name="q4" value="2"> Una base de datos</label>
+          <label><input type="radio" name="q4" value="3"> Un servidor</label>
+        </fieldset>
+
+        <fieldset class="level-question" data-correct="0">
+          <legend>5. ¿Qué es un "bug"?</legend>
+          <label><input type="radio" name="q5" value="0"> Un error en el código</label>
+          <label><input type="radio" name="q5" value="1"> Un lenguaje de programación</label>
+          <label><input type="radio" name="q5" value="2"> Un tipo de variable</label>
+          <label><input type="radio" name="q5" value="3"> Una librería</label>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="submit" class="btn primary">Ver mi nivel ⚡</button>
+        </div>
+      </form>
+
+      <div id="quiz-result" class="level-result" style="display:none;">
+        <div class="progress-wrap">
+          <div class="progress-bar" id="level-bar"></div>
+        </div>
+        <p class="progress-label" id="level-label">—</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER: ENLACES RÁPIDOS + COPYRIGHT ================= -->
+<footer class="wrap site-footer">
+  <div class="quicklinks">
+    <div class="quicklinks-title">Enlaces rápidos</div>
+    <nav class="quicklinks-nav">
+      <a href="index.html">Inicio</a>
+      <a href="wiki.html">Wiki</a>
+      <a href="demo.html">Demo &amp; juego</a>
+      <a href="nivel.html">Conoce tu nivel</a>
+      <a href="index.html#universidades">Universidades</a>
+      <a href="index.html#formulario">Formulario</a>
+    </nav>
+  </div>
+  <p class="copyright">© <span data-year></span> ruta::software — este diagnóstico es solo una referencia informal.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

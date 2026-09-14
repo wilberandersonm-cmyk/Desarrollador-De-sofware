@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<!-- =========================================================================
+  RUTA::SOFTWARE — wiki.html (artículo estilo enciclopedia)
+  -------------------------------------------------------------------------
+  ÍNDICE DE ESTE ARCHIVO:
+    1. .topbar          → misma barra superior que index.html y demo.html
+    2. #wiki-view-toggle → botón que cambia entre "vista clásica" y "vista
+                            decorada" (guarda la elección en localStorage)
+    3. .wiki-layout      → columna de texto (.wiki-body) + ficha (.infobox)
+    4. .toc              → tabla de contenido visible dentro del artículo
+    5. #definicion ... #enlaces → secciones del artículo, cada una con su
+                            propia ilustración SVG (ver .wiki-media)
+    6. <footer>           → enlaces rápidos + copyright
+  La lógica del botón de vista está al final de este archivo, en <script>.
+  Estilos: style.css (busca ".wiki-decorated") · Reloj/modo oscuro: script.js
+  ========================================================================= -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ingeniería de Software — Wiki de RUTA::SOFTWARE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="dots"><span></span><span></span><span></span></span>
+    <div class="brand"><span class="accent">ruta</span><span class="path">::</span>software</div>
+    <nav class="nav">
+      <a href="index.html"><span class="nav-icon">⌂</span>inicio</a>
+      <a href="wiki.html" aria-current="page"><span class="nav-icon">§</span>wiki</a>
+      <a href="demo.html"><span class="nav-icon">▶</span>demo &amp; juego</a>
+      <a href="nivel.html"><span class="nav-icon">⚡</span>nivel</a>
+    </nav>
+    <span class="clock" data-clock></span>
+    <button class="theme-toggle" data-theme-toggle>☾ modo oscuro</button>
+  </div>
+</header>
+
+<main class="wrap" style="padding-top:36px;">
+  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+    <div>
+      <p class="kicker">artículo · wiki interna</p>
+      <h1 style="font-family:var(--font-mono); font-size:clamp(1.6rem,4vw,2.2rem); margin:.3em 0 .6em;">Ingeniería de Software</h1>
+    </div>
+    <!-- Botón para alternar entre la vista clásica (tipo wiki) y la decorada (tipo revista) -->
+    <button class="btn" id="wiki-view-toggle" style="margin-top:6px;">🎨 Cambiar a vista decorada</button>
+  </div>
+
+  <div class="wiki-layout">
+    <div class="wiki-body">
+
+      <nav class="toc" aria-label="Tabla de contenido">
+        <div class="toc-title">Contenido</div>
+        <ol>
+          <li><a href="#definicion">Definición</a></li>
+          <li><a href="#historia">Historia breve</a></li>
+          <li><a href="#areas">Áreas de especialización</a></li>
+          <li><a href="#habilidades">Habilidades y herramientas</a></li>
+          <li><a href="#campo">Campo laboral</a></li>
+          <li><a href="#requisitos">Requisitos para estudiarla</a></li>
+          <li><a href="#enlaces">Enlaces relacionados</a></li>
+        </ol>
+      </nav>
+
+      <!-- Cada .wiki-section trae su propio ícono SVG (ilustración original,
+           no una foto) en .wiki-media, para que se vea bien tanto en la
+           vista clásica (imagen pequeña a la izquierda) como en la
+           decorada (imagen grande arriba, tipo tarjeta de revista). -->
+
+      <article class="wiki-section" id="definicion">
+        <div class="wiki-media">
+          <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustración de engranajes y código">
+            <rect width="200" height="160" fill="var(--bg-alt)"/>
+            <circle cx="70" cy="80" r="34" fill="none" stroke="var(--accent)" stroke-width="6"/>
+            <circle cx="130" cy="55" r="20" fill="none" stroke="var(--accent-2)" stroke-width="5"/>
+            <text x="70" y="86" text-anchor="middle" font-family="monospace" font-size="16" fill="var(--ink-soft)">&lt;/&gt;</text>
+          </svg>
+        </div>
+        <div class="wiki-text">
+          <h2>Definición</h2>
+          <p>La Ingeniería de Software es la disciplina que aplica principios de ingeniería al diseño, desarrollo, prueba y mantenimiento de programas y sistemas informáticos. A diferencia de la programación aislada, pone énfasis en procesos, calidad y trabajo en equipo para construir software confiable a gran escala.</p>
+        </div>
+      </article>
+
+      <article class="wiki-section" id="historia">
+        <div class="wiki-media">
+          <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustración de una línea de tiempo">
+            <rect width="200" height="160" fill="var(--bg-alt)"/>
+            <line x1="30" y1="80" x2="170" y2="80" stroke="var(--line)" stroke-width="4"/>
+            <circle cx="50" cy="80" r="9" fill="var(--accent)"/>
+            <circle cx="100" cy="80" r="9" fill="var(--accent-2)"/>
+            <circle cx="150" cy="80" r="9" fill="var(--accent)"/>
+            <text x="50" y="105" text-anchor="middle" font-family="monospace" font-size="10" fill="var(--ink-soft)">1960s</text>
+            <text x="100" y="105" text-anchor="middle" font-family="monospace" font-size="10" fill="var(--ink-soft)">2000s</text>
+            <text x="150" y="105" text-anchor="middle" font-family="monospace" font-size="10" fill="var(--ink-soft)">hoy</text>
+          </svg>
+        </div>
+        <div class="wiki-text">
+          <h2>Historia breve</h2>
+          <p>El término se popularizó a finales de los años 1960, cuando el crecimiento de los sistemas informáticos hizo evidente que escribir código sin una metodología ordenada generaba proyectos difíciles de mantener. Desde entonces han surgido distintas metodologías de trabajo, desde procesos muy documentados hasta los métodos ágiles usados hoy en la mayoría de equipos.</p>
+        </div>
+      </article>
+
+      <article class="wiki-section" id="areas">
+        <div class="wiki-media">
+          <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustración de ramas de especialización">
+            <rect width="200" height="160" fill="var(--bg-alt)"/>
+            <circle cx="100" cy="40" r="14" fill="var(--accent)"/>
+            <line x1="100" y1="54" x2="55" y2="100" stroke="var(--line)" stroke-width="3"/>
+            <line x1="100" y1="54" x2="100" y2="100" stroke="var(--line)" stroke-width="3"/>
+            <line x1="100" y1="54" x2="145" y2="100" stroke="var(--line)" stroke-width="3"/>
+            <circle cx="55" cy="112" r="11" fill="var(--panel)" stroke="var(--accent-2)" stroke-width="3"/>
+            <circle cx="100" cy="112" r="11" fill="var(--panel)" stroke="var(--accent-2)" stroke-width="3"/>
+            <circle cx="145" cy="112" r="11" fill="var(--panel)" stroke="var(--accent-2)" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="wiki-text">
+          <h2>Áreas de especialización</h2>
+          <p>Quien estudia esta carrera puede orientarse, con el tiempo, hacia distintas ramas:</p>
+          <p><strong>Desarrollo web:</strong> construcción de sitios y aplicaciones que funcionan en el navegador.<br>
+          <strong>Desarrollo móvil:</strong> aplicaciones para teléfonos y tablets.<br>
+          <strong>Bases de datos:</strong> diseño y administración de la información de un sistema.<br>
+          <strong>DevOps e infraestructura:</strong> automatizar cómo se prueba, despliega y mantiene el software.<br>
+          <strong>Ciberseguridad:</strong> proteger sistemas y datos de accesos no autorizados.<br>
+          <strong>Inteligencia artificial y datos:</strong> construir modelos y sistemas que aprenden de la información.</p>
+        </div>
+      </article>
+
+      <article class="wiki-section" id="habilidades">
+        <div class="wiki-media">
+          <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustración de una caja de herramientas">
+            <rect width="200" height="160" fill="var(--bg-alt)"/>
+            <rect x="55" y="70" width="90" height="55" rx="6" fill="var(--panel)" stroke="var(--accent)" stroke-width="3"/>
+            <rect x="80" y="55" width="40" height="20" rx="4" fill="var(--panel)" stroke="var(--accent)" stroke-width="3"/>
+            <line x1="55" y1="95" x2="145" y2="95" stroke="var(--accent-2)" stroke-width="4"/>
+          </svg>
+        </div>
+        <div class="wiki-text">
+          <h2>Habilidades y herramientas</h2>
+          <p>Además de la lógica de programación, la carrera desarrolla habilidades de resolución de problemas, trabajo en equipo y comunicación técnica. Entre las herramientas más usadas están los editores de código, los sistemas de control de versiones y las plataformas de gestión de proyectos, algunas de las cuales se listan en la <a href="index.html#herramientas">página principal</a>.</p>
+        </div>
+      </article>
+
+      <article class="wiki-section" id="campo">
+        <div class="wiki-media">
+          <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustración de un gráfico de crecimiento laboral">
+            <rect width="200" height="160" fill="var(--bg-alt)"/>
+            <polyline points="40,120 80,95 110,105 150,60 170,45" fill="none" stroke="var(--accent)" stroke-width="4"/>
+            <circle cx="170" cy="45" r="6" fill="var(--accent-2)"/>
+            <line x1="40" y1="130" x2="170" y2="130" stroke="var(--line)" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="wiki-text">
+          <h2>Campo laboral</h2>
+          <p>Las personas graduadas suelen trabajar en empresas de tecnología, bancos, telecomunicaciones, gobierno o de forma independiente en proyectos remotos para clientes de otros países. La demanda de esta carrera se ha mantenido alta en los últimos años debido a la digitalización de la mayoría de sectores económicos.</p>
+        </div>
+      </article>
+
+      <article class="wiki-section" id="requisitos">
+        <div class="wiki-media">
+          <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustración de una lista de requisitos">
+            <rect width="200" height="160" fill="var(--bg-alt)"/>
+            <rect x="55" y="35" width="90" height="90" rx="6" fill="var(--panel)" stroke="var(--line)"/>
+            <line x1="68" y1="55" x2="132" y2="55" stroke="var(--line)" stroke-width="4"/>
+            <line x1="68" y1="75" x2="132" y2="75" stroke="var(--line)" stroke-width="4"/>
+            <line x1="68" y1="95" x2="110" y2="95" stroke="var(--line)" stroke-width="4"/>
+            <circle cx="128" cy="100" r="14" fill="var(--accent)"/>
+            <path d="M121 100 l5 5 l9 -10" fill="none" stroke="#08130F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="wiki-text">
+          <h2>Requisitos para estudiarla</h2>
+          <p>En general se requiere haber finalizado la educación media (bachillerato), aprobar el proceso de admisión de la universidad elegida y, en algunos casos, una prueba de aptitudes lógico-matemáticas. Puedes revisar los pasos específicos de cada universidad en la sección de <a href="index.html#universidades">universidades</a> de la página principal.</p>
+        </div>
+      </article>
+
+      <article class="wiki-section" id="enlaces">
+        <div class="wiki-media">
+          <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustración de enlaces conectados">
+            <rect width="200" height="160" fill="var(--bg-alt)"/>
+            <circle cx="65" cy="80" r="16" fill="none" stroke="var(--accent)" stroke-width="4"/>
+            <circle cx="135" cy="80" r="16" fill="none" stroke="var(--accent-2)" stroke-width="4"/>
+            <line x1="80" y1="80" x2="120" y2="80" stroke="var(--line)" stroke-width="4"/>
+          </svg>
+        </div>
+        <div class="wiki-text">
+          <h2>Enlaces relacionados</h2>
+          <p><a href="index.html#formulario">Arma tu ficha de orientación</a> · <a href="demo.html">Prueba el demo interactivo</a> · <a href="nivel.html">Conoce tu nivel de aprendizaje</a></p>
+        </div>
+      </article>
+
+    </div>
+
+    <aside class="infobox">
+      <div class="win-bar">infobox.md</div>
+      <table>
+        <tr><td class="k">Campo</td><td>Ingeniería / Tecnología</td></tr>
+        <tr><td class="k">Duración típica</td><td>4.5 – 5 años</td></tr>
+        <tr><td class="k">Modalidad</td><td>Presencial, semipresencial o virtual</td></tr>
+        <tr><td class="k">Áreas afines</td><td>Ingeniería en Sistemas, Ciencias de la Computación</td></tr>
+        <tr><td class="k">Universidades en esta guía</td><td>UES, UDB, UCA</td></tr>
+        <tr><td class="k">Última edición</td><td><span data-clock>—</span></td></tr>
+      </table>
+    </aside>
+  </div>
+</main>
+
+<!-- ================= FOOTER: ENLACES RÁPIDOS + COPYRIGHT ================= -->
+<footer class="wrap site-footer">
+  <div class="quicklinks">
+    <div class="quicklinks-title">Enlaces rápidos</div>
+    <nav class="quicklinks-nav">
+      <a href="index.html">Inicio</a>
+      <a href="wiki.html">Wiki</a>
+      <a href="demo.html">Demo &amp; juego</a>
+      <a href="nivel.html">Conoce tu nivel</a>
+      <a href="index.html#universidades">Universidades</a>
+      <a href="index.html#formulario">Formulario</a>
+    </nav>
+  </div>
+  <p class="copyright">© <span data-year></span> ruta::software — artículo con fines informativos, estilo wiki.</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+/* -------------------------------------------------------------------------
+   BOTÓN "CAMBIAR VISTA" — alterna entre:
+   - Vista clásica  (por defecto): imágenes pequeñas a la izquierda de cada
+     sección, look sobrio de enciclopedia.
+   - Vista decorada: imágenes grandes arriba de cada sección, tarjetas con
+     borde de color y esquinas redondeadas, look de revista.
+   La preferencia se guarda en localStorage para recordarla la próxima vez.
+   ------------------------------------------------------------------------- */
+(function initWikiViewToggle(){
+  const btn = document.getElementById('wiki-view-toggle');
+  if(!btn) return;
+
+  function apply(view){
+    document.body.classList.toggle('wiki-decorated', view === 'decorada');
+    btn.textContent = view === 'decorada' ? '📄 Cambiar a vista clásica' : '🎨 Cambiar a vista decorada';
+  }
+
+  const saved = localStorage.getItem('rs-wiki-view') || 'clasica';
+  apply(saved);
+
+  btn.addEventListener('click', () => {
+    const next = document.body.classList.contains('wiki-decorated') ? 'clasica' : 'decorada';
+    localStorage.setItem('rs-wiki-view', next);
+    apply(next);
+  });
+})();
+</script>
+</body>
+</html>
